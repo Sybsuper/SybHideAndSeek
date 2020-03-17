@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2020 Sybsuper
+ * All Rights Reserved
+ *
+ * Do not use this code without permission from the developer.
+ */
+
 package me.sybsuper.hideandseek.listeners;
 
 import me.sybsuper.hideandseek.Main;
@@ -11,45 +18,47 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class Leave implements Listener {
 	private static Main plugin;
+
 	public Leave(Main plugin) {
-		this.plugin = plugin;
+		Leave.plugin = plugin;
 	}
+
 	@EventHandler
 	public void OnPlayerQuitEvent(PlayerQuitEvent e) {
-		if (this.plugin.gameGoing && this.plugin.inGame.contains(e.getPlayer())){
-			if (this.plugin.seeker.getUniqueId() == e.getPlayer().getUniqueId()) {
-				for (Player p:this.plugin.inGame) {
+		if (plugin.gameGoing && plugin.inGame.contains(e.getPlayer())) {
+			if (plugin.seeker.getUniqueId() == e.getPlayer().getUniqueId()) {
+				for (Player p : plugin.inGame) {
 					p.sendMessage(ChatColor.WHITE + "The seeker left the game. The game stopped.");
 					new BukkitRunnable() {
 						@Override
 						public void run() {
 							plugin.stopGame();
-							for (Player p:plugin.inGame) {
+							for (Player p : plugin.inGame) {
 								p.teleport(plugin.world.getSpawnLocation());
 							}
 						}
-					}.runTaskLater(this.plugin, 20 * 10);
+					}.runTaskLater(plugin, 20 * 10);
 				}
 			}
 			boolean isHiderAlive = false;
-			for (Player p2:this.plugin.inGame) {
-				if (p2.getGameMode() == GameMode.SURVIVAL && p2.getUniqueId() != this.plugin.seeker.getUniqueId()) {
+			for (Player p2 : plugin.inGame) {
+				if (p2.getGameMode() == GameMode.SURVIVAL && p2.getUniqueId() != plugin.seeker.getUniqueId()) {
 					isHiderAlive = true;
 				}
 			}
 			if (!(isHiderAlive)) {
-				for (Player p2 : this.plugin.inGame) {
-					p2.sendMessage(ChatColor.WHITE + "" + ChatColor.BOLD + "The seeker found everyone. Well done " + this.plugin.seeker.getDisplayName());
+				for (Player p2 : plugin.inGame) {
+					p2.sendMessage(ChatColor.WHITE + "" + ChatColor.BOLD + "The seeker found everyone. Well done " + plugin.seeker.getDisplayName());
 				}
 				new BukkitRunnable() {
 					@Override
 					public void run() {
 						plugin.stopGame();
-						for (Player p:plugin.inGame) {
+						for (Player p : plugin.inGame) {
 							p.teleport(plugin.world.getSpawnLocation());
 						}
 					}
-				}.runTaskLater(this.plugin, 20 * 10);
+				}.runTaskLater(plugin, 20 * 10);
 			}
 		}
 	}

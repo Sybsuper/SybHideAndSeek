@@ -1,6 +1,6 @@
 name: HideandSeek
 main: me.sybsuper.hideandseek.Main
-version: 1.2
+version: 1.2.1
 commands:
   hideandseek:
     description: Start a Hide & Seek game.

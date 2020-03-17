@@ -1,7 +1,13 @@
+/*
+ * Copyright (c) 2020 Sybsuper
+ * All Rights Reserved
+ *
+ * Do not use this code without permission from the developer.
+ */
+
 package me.sybsuper.hideandseek;
 
 import me.sybsuper.hideandseek.listeners.Death;
-
 import me.sybsuper.hideandseek.listeners.Leave;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -17,7 +23,9 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Main extends JavaPlugin {
 	public List<Player> inGame;
@@ -259,7 +267,7 @@ public class Main extends JavaPlugin {
 						sender.sendMessage("You survived.");
 						playedSound.remove(p.getUniqueId().toString());
 						for (String command : soundRewardCommands) {
-							Bukkit.getServer().dispatchCommand(getServer().getConsoleSender(), command);
+							Bukkit.getServer().dispatchCommand(getServer().getConsoleSender(), command.replaceAll("\\{player}", p.getName()));
 						}
 					}
 				}
