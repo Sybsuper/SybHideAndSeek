@@ -1,0 +1,12 @@
+name: HideandSeek
+main: me.sybsuper.hideandseek.Main
+version: 1.2
+commands:
+  hideandseek:
+    description: Start a Hide & Seek game.
+    permission: hideandseek.start
+    usage: /hideandseek
+  sound:
+    description: Play a sound at your position to get a reward.
+    permission: hideandseek.sound
+    usage: /sound

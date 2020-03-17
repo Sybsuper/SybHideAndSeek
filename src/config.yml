@@ -1,0 +1,52 @@
+# in which world will the game take place.
+world: "hideandseek"
+# will the worldborder start shrinking after sometime
+shrinking:
+  # enable this: true or false
+  enable: true
+  # after how many seconds shall the border shrink
+  after:
+    - 120
+    - 240
+    - 360
+    - 480
+    - 600
+    - 720
+    - 840
+    - 960
+    - 1080
+    - 1200
+  # how fast should the border shrink
+  duration: 60
+  # what percentage will be left of the border after shrinking, 75% equals 0.75
+  factor: 0.80
+sound:
+  # enable sounds
+  enable: true
+  # how many seconds the player should wait between playing a sound
+  minDelay: 30
+  # how many seconds the player has to survive to get the reward
+  surviveTime: 30
+  # reward command when the player is still alive after the
+  rewardCommands:
+    - eco give {player} 50
+
+# how many seconds do the hiders have to get to a safe place
+hideTime: 60
+# minimal amount of players
+minPlayers: 2
+# hide the default Death messages
+hideDefaultDeathMessages: true
+# when shall the time the hiders have left to hide, be shown in the chat
+announceTimeAt:
+  - 60
+  - 50
+  - 40
+  - 30
+  - 20
+  - 10
+  - 5
+  - 4
+  - 3
+  - 2
+  - 1
