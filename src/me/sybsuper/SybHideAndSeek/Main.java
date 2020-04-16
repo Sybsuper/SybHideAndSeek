@@ -111,6 +111,12 @@ public class Main extends JavaPlugin {
 			}
 			if (args.length == 1) {
 				if (args[0].equalsIgnoreCase("stop")) {
+					for (Player p2 : inGame) {
+						p2.getInventory().clear();
+						if (config.getBoolean("hideNameTags")) {
+							p2.setCustomNameVisible(true);
+						}
+					}
 					this.stopGame();
 					sender.sendMessage("The game stopped.");
 					return true;
@@ -160,7 +166,7 @@ public class Main extends JavaPlugin {
 							p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20 * this.hideTime, 255, false, false));
 							p.setWalkSpeed(0);
 							p.getInventory().clear();
-							new BukkitRunnable() {
+							this.tasks.add(new BukkitRunnable() {
 								@Override
 								public void run() {
 									seeker.setWalkSpeed(0.2F);
@@ -170,29 +176,31 @@ public class Main extends JavaPlugin {
 									sword.addUnsafeEnchantment(Enchantment.DURABILITY, 10);
 									seeker.getInventory().setItem(0, sword);
 								}
-							}.runTaskLater(this, 20 * this.hideTime);
-							this.freezeSeeker = new BukkitRunnable() {
+							});
+							this.tasks.get(this.tasks.size() - 1).runTaskLater(this, 20 * this.hideTime);
+							this.tasks.add(new BukkitRunnable() {
 								@Override
 								public void run() {
 									Location spawn = world.getSpawnLocation();
 									spawn.setPitch(90);
 									seeker.teleport(spawn);
 								}
-							};
-							this.freezeSeeker.runTaskTimer(this, 2, 2);
+							});
+							this.tasks.get(this.tasks.size() - 1).runTaskTimer(this, 2, 2);
 						}
 					}
 					for (Integer time : announceTimeAt) {
-						new BukkitRunnable() {
+						this.tasks.add(new BukkitRunnable() {
 							@Override
 							public void run() {
 								for (Player p : inGame) {
 									p.sendMessage(time + " seconds left");
 								}
 							}
-						}.runTaskLater(this, 20 * (this.hideTime - time));
+						});
+						this.tasks.get(this.tasks.size() - 1).runTaskLater(this, 20 * (this.hideTime - time));
 					}
-					new BukkitRunnable() {
+					this.tasks.add(new BukkitRunnable() {
 						@Override
 						public void run() {
 							for (Player p : inGame) {
@@ -200,7 +208,8 @@ public class Main extends JavaPlugin {
 								freezeSeeker.cancel();
 							}
 						}
-					}.runTaskLater(this, 20 * this.hideTime);
+					});
+					this.tasks.get(this.tasks.size() - 1).runTaskLater(this, 20 * this.hideTime);
 					if (this.shrinking) {
 						this.tasks = new ArrayList<BukkitRunnable>();
 						for (Integer time : this.shrinkingAfter) {
