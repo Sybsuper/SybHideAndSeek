@@ -104,7 +104,7 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (cmd.getName().equalsIgnoreCase("sybhideandseek")) {
+		if (cmd.getName().equalsIgnoreCase("hideandseek")) {
 			if (!(sender.hasPermission("sybhideandseek.start"))) {
 				sender.sendMessage(ChatColor.RED + "You don't have permission to execute this command.");
 				return true;
