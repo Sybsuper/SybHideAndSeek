@@ -30,7 +30,8 @@ sound:
   # reward command when the player is still alive after the
   rewardCommands:
     - eco give {player} 50
-
+# Should the nametags be hidden
+hideNameTags: true
 # how many seconds do the hiders have to get to a safe place
 hideTime: 60
 # minimal amount of players

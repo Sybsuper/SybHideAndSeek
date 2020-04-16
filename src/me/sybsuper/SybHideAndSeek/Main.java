@@ -142,6 +142,9 @@ public class Main extends JavaPlugin {
 						p.teleport(this.world.getSpawnLocation());
 						p.setGameMode(GameMode.SURVIVAL);
 						p.sendMessage("You're now in a Hide & Seek game.");
+						if (config.getBoolean("hideNameTags")) {
+							p.setCustomNameVisible(false);
+						}
 					}
 					this.seeker = this.inGame.get(new Random().nextInt(this.inGame.size()));
 					this.seeker.sendMessage(ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "You're the seeker.");

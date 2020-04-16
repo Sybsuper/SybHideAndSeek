@@ -59,6 +59,10 @@ public class Death implements Listener {
 				if (!(isHiderAlive)) {
 					for (Player p2 : plugin.inGame) {
 						p2.sendMessage(ChatColor.WHITE + "" + ChatColor.BOLD + "The seeker found everyone. Well done " + plugin.seeker.getDisplayName());
+						p2.getInventory().clear();
+						if (plugin.config.getBoolean("hideNameTags")) {
+							p2.setCustomNameVisible(true);
+						}
 					}
 					new BukkitRunnable() {
 						@Override

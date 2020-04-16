@@ -28,18 +28,22 @@ public class Leave implements Listener {
 		if (plugin.gameGoing && plugin.inGame.contains(e.getPlayer())) {
 			if (plugin.seeker.getUniqueId() == e.getPlayer().getUniqueId()) {
 				for (Player p : plugin.inGame) {
+					p.getInventory().clear();
 					p.sendMessage(ChatColor.WHITE + "The seeker left the game. The game stopped.");
-					new BukkitRunnable() {
-						@Override
-						public void run() {
-							plugin.stopGame();
-							for (Player p : plugin.inGame) {
-								p.teleport(plugin.world.getSpawnLocation());
-								p.setGameMode(GameMode.SURVIVAL);
-							}
-						}
-					}.runTaskLater(plugin, 20 * 10);
+					if (plugin.config.getBoolean("hideNameTags")) {
+						p.setCustomNameVisible(true);
+					}
 				}
+				new BukkitRunnable() {
+					@Override
+					public void run() {
+						plugin.stopGame();
+						for (Player p : plugin.inGame) {
+							p.teleport(plugin.world.getSpawnLocation());
+							p.setGameMode(GameMode.SURVIVAL);
+						}
+					}
+				}.runTaskLater(plugin, 20 * 10);
 			}
 			boolean isHiderAlive = false;
 			for (Player p2 : plugin.inGame) {
@@ -49,6 +53,10 @@ public class Leave implements Listener {
 			}
 			if (!(isHiderAlive)) {
 				for (Player p2 : plugin.inGame) {
+					p2.getInventory().clear();
+					if (plugin.config.getBoolean("hideNameTags")) {
+						p2.setCustomNameVisible(true);
+					}
 					p2.sendMessage(ChatColor.WHITE + "" + ChatColor.BOLD + "The seeker found everyone. Well done " + plugin.seeker.getDisplayName());
 				}
 				new BukkitRunnable() {
