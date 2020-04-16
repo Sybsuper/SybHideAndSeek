@@ -2,13 +2,13 @@
  * Copyright (c) 2020 Sybsuper
  * All Rights Reserved
  *
- * Do not use this code without permission from the developer.
+ * Do not use this code without permission of the developer.
  */
 
-package me.sybsuper.hideandseek;
+package me.sybsuper.SybHideAndSeek;
 
-import me.sybsuper.hideandseek.listeners.Death;
-import me.sybsuper.hideandseek.listeners.Leave;
+import me.sybsuper.SybHideAndSeek.listeners.Death;
+import me.sybsuper.SybHideAndSeek.listeners.Leave;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -104,8 +104,8 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (cmd.getName().equalsIgnoreCase("hideandseek")) {
-			if (!(sender.hasPermission("hideandseek.start"))) {
+		if (cmd.getName().equalsIgnoreCase("sybhideandseek")) {
+			if (!(sender.hasPermission("sybhideandseek.start"))) {
 				sender.sendMessage(ChatColor.RED + "You don't have permission to execute this command.");
 				return true;
 			}
@@ -133,11 +133,7 @@ public class Main extends JavaPlugin {
 			this.world = Bukkit.getWorld(this.worldName);
 			if (this.world != null) {
 				this.inGame = this.world.getPlayers();
-				if (this.hideDefaultDeathMessages) {
-					this.world.setGameRule(GameRule.SHOW_DEATH_MESSAGES, false);
-				} else {
-					this.world.setGameRule(GameRule.SHOW_DEATH_MESSAGES, true);
-				}
+				this.world.setGameRule(GameRule.SHOW_DEATH_MESSAGES, !this.hideDefaultDeathMessages);
 				if (this.inGame.size() >= this.minPlayers) {
 					this.gameGoing = true;
 					this.playedSound = new ArrayList<String>();
@@ -228,7 +224,7 @@ public class Main extends JavaPlugin {
 				sender.sendMessage(ChatColor.RED + "Sounds are not enabled.");
 				return true;
 			}
-			if (!sender.hasPermission("hideandseek.sound")) {
+			if (!sender.hasPermission("sybhideandseek.sound")) {
 				sender.sendMessage(ChatColor.RED + "You don't have permission to execute this command.");
 				return true;
 			}

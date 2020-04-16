@@ -1,12 +1,13 @@
-name: HideandSeek
-main: me.sybsuper.hideandseek.Main
-version: 1.2.1
+name: SybHideAndSeek
+main: me.sybsuper.SybHideAndSeek.Main
+version: 1.3.0
 commands:
   hideandseek:
+    aliases: [hideandseek,has]
     description: Start a Hide & Seek game.
-    permission: hideandseek.start
-    usage: /hideandseek
+    permission: sybhideandseek.start
+    usage: /sybhideandseek
   sound:
     description: Play a sound at your position to get a reward.
-    permission: hideandseek.sound
+    permission: sybhideandseek.sound
     usage: /sound

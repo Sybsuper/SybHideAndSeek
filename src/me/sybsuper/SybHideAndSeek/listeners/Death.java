@@ -2,12 +2,12 @@
  * Copyright (c) 2020 Sybsuper
  * All Rights Reserved
  *
- * Do not use this code without permission from the developer.
+ * Do not use this code without permission of the developer.
  */
 
-package me.sybsuper.hideandseek.listeners;
+package me.sybsuper.SybHideAndSeek.listeners;
 
-import me.sybsuper.hideandseek.Main;
+import me.sybsuper.SybHideAndSeek.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -66,6 +66,7 @@ public class Death implements Listener {
 							plugin.stopGame();
 							for (Player p : plugin.inGame) {
 								p.teleport(plugin.world.getSpawnLocation());
+								p.setGameMode(GameMode.SURVIVAL);
 							}
 						}
 					}.runTaskLater(plugin, 20 * 10);

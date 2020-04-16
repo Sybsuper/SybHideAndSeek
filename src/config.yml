@@ -1,5 +1,5 @@
 # in which world will the game take place.
-world: "hideandseek"
+world: "SybHideAndSeek"
 # will the worldborder start shrinking after sometime
 shrinking:
   # enable this: true or false
