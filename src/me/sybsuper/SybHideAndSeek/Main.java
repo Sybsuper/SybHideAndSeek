@@ -95,6 +95,7 @@ public class Main extends JavaPlugin {
 	}
 
 	public void stopGame() {
+		seeker.setWalkSpeed(0.2F);
 		this.gameGoing = false;
 		for (BukkitRunnable task : this.tasks) {
 			task.cancel();
