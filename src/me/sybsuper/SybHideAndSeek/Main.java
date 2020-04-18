@@ -95,7 +95,6 @@ public class Main extends JavaPlugin {
 	}
 
 	public void stopGame() {
-		seeker.setWalkSpeed(0.2F);
 		this.gameGoing = false;
 		for (BukkitRunnable task : this.tasks) {
 			task.cancel();
@@ -165,12 +164,10 @@ public class Main extends JavaPlugin {
 							p.sendMessage(ChatColor.WHITE + "" + ChatColor.BOLD + "Wait " + this.hideTime + " seconds before you can search for the hiders.");
 							p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * this.hideTime, 10, false, false));
 							p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 20 * this.hideTime, 255, false, false));
-							p.setWalkSpeed(0);
 							p.getInventory().clear();
 							this.tasks.add(new BukkitRunnable() {
 								@Override
 								public void run() {
-									seeker.setWalkSpeed(0.2F);
 									seeker.teleport(world.getSpawnLocation());
 									ItemStack sword = new ItemStack(Material.DIAMOND_SWORD);
 									sword.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 16);
@@ -179,15 +176,15 @@ public class Main extends JavaPlugin {
 								}
 							});
 							this.tasks.get(this.tasks.size() - 1).runTaskLater(this, 20 * this.hideTime);
-							this.tasks.add(new BukkitRunnable() {
+							freezeSeeker = new BukkitRunnable() {
 								@Override
 								public void run() {
 									Location spawn = world.getSpawnLocation();
 									spawn.setPitch(90);
 									seeker.teleport(spawn);
 								}
-							});
-							this.tasks.get(this.tasks.size() - 1).runTaskTimer(this, 2, 2);
+							};
+							freezeSeeker.runTaskTimer(this, 2, 2);
 						}
 					}
 					for (Integer time : announceTimeAt) {
