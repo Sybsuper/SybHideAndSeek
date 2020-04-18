@@ -95,6 +95,9 @@ public class Main extends JavaPlugin {
 	}
 
 	public void stopGame() {
+		if (!freezeSeeker.isCancelled()) {
+			freezeSeeker.cancel();
+		}
 		this.gameGoing = false;
 		for (BukkitRunnable task : this.tasks) {
 			task.cancel();
