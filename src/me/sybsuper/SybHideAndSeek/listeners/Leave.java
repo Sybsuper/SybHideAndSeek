@@ -1,22 +1,15 @@
-/*
- * Copyright (c) 2020 Sybsuper
- * All Rights Reserved
- *
- * Do not use this code without permission of the developer.
- */
-
 package me.sybsuper.SybHideAndSeek.listeners;
 
-import me.sybsuper.SybHideAndSeek.Main;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.scheduler.BukkitRunnable;
+import me.sybsuper.SybHideAndSeek.*;
+import org.bukkit.event.player.*;
+import org.bukkit.entity.*;
+import org.bukkit.scheduler.*;
+import java.util.*;
+import org.bukkit.plugin.*;
+import org.bukkit.event.*;
 
-public class Leave implements Listener {
+public class Leave implements Listener
+{
 	private static Main plugin;
 
 	public Leave(Main plugin) {
@@ -25,50 +18,51 @@ public class Leave implements Listener {
 
 	@EventHandler
 	public void OnPlayerQuitEvent(PlayerQuitEvent e) {
-		if (plugin.gameGoing && plugin.inGame.contains(e.getPlayer())) {
-			if (plugin.seeker.getUniqueId() == e.getPlayer().getUniqueId()) {
-				for (Player p : plugin.inGame) {
+		if (Leave.plugin.gameGoing && Leave.plugin.inGame.contains(e.getPlayer())) {
+			if (Leave.plugin.seeker.getUniqueId() == e.getPlayer().getUniqueId()) {
+				for (Player p : Leave.plugin.inGame) {
 					p.getInventory().clear();
-					p.sendMessage(ChatColor.WHITE + "The seeker left the game. The game stopped.");
-					if (plugin.config.getBoolean("hideNameTags")) {
+					p.sendMessage(Leave.plugin.messageSeekerLeft);
+					if (Leave.plugin.config.getBoolean("hideNameTags")) {
 						p.setCustomNameVisible(true);
 					}
 				}
 				new BukkitRunnable() {
-					@Override
 					public void run() {
-						plugin.stopGame();
-						for (Player p : plugin.inGame) {
-							p.teleport(plugin.world.getSpawnLocation());
-							p.setGameMode(GameMode.SURVIVAL);
+						Leave.plugin.stopGame();
+						for (Player p : Leave.plugin.inGame) {
+							p.teleport(Leave.plugin.world.getSpawnLocation());
+							p.setGameMode(Main.gamemode);
 						}
 					}
-				}.runTaskLater(plugin, 20 * 10);
+				}.runTaskLater((Plugin)Leave.plugin, 200L);
 			}
-			boolean isHiderAlive = false;
-			for (Player p2 : plugin.inGame) {
-				if (p2.getGameMode() == GameMode.SURVIVAL && p2.getUniqueId() != plugin.seeker.getUniqueId()) {
-					isHiderAlive = true;
-				}
-			}
-			if (!(isHiderAlive)) {
-				for (Player p2 : plugin.inGame) {
-					p2.getInventory().clear();
-					if (plugin.config.getBoolean("hideNameTags")) {
-						p2.setCustomNameVisible(true);
+			else {
+				boolean isHiderAlive = false;
+				for (Player p2 : Leave.plugin.inGame) {
+					if (p2.getGameMode() == Main.gamemode && p2.getUniqueId() != Leave.plugin.seeker.getUniqueId()) {
+						isHiderAlive = true;
+						break;
 					}
-					p2.sendMessage(ChatColor.WHITE + "" + ChatColor.BOLD + "The seeker found everyone. Well done " + plugin.seeker.getDisplayName());
 				}
-				new BukkitRunnable() {
-					@Override
-					public void run() {
-						plugin.stopGame();
-						for (Player p : plugin.inGame) {
-							p.teleport(plugin.world.getSpawnLocation());
-							p.setGameMode(GameMode.SURVIVAL);
+				if (!isHiderAlive) {
+					for (Player p2 : Leave.plugin.inGame) {
+						p2.getInventory().clear();
+						if (Leave.plugin.config.getBoolean("hideNameTags")) {
+							p2.setCustomNameVisible(true);
 						}
+						p2.sendMessage(Leave.plugin.messageSeekerFoundEveryone.replaceAll("\\{seeker}", Leave.plugin.seeker.getDisplayName()));
 					}
-				}.runTaskLater(plugin, 20 * 10);
+					new BukkitRunnable() {
+						public void run() {
+							Leave.plugin.stopGame();
+							for (Player p : Leave.plugin.inGame) {
+								p.teleport(Leave.plugin.world.getSpawnLocation());
+								p.setGameMode(Main.gamemode);
+							}
+						}
+					}.runTaskLater((Plugin)Leave.plugin, 200L);
+				}
 			}
 		}
 	}

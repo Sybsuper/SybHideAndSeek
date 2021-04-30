@@ -51,3 +51,51 @@ announceTimeAt:
   - 3
   - 2
   - 1
+messages:
+  seeker: "&2&lYou're the seeker."
+  welcome: "You're now in a Hide & Seek game."
+  shrink: "&f&lThe worldborder will shrink to {percentage}% in {time} seconds!"
+  gameStopped: "The game stopped."
+  reloaded: "The settings from the config.yml file have been reloaded."
+  alreadyStarted: "&cA game has already started."
+  isTheSeeker: "&f&l{seeker} is the seeker, you have 1 minute to get away."
+  youAreTheSeeker: "&f&lWait {time} seconds before you can search for the hiders."
+  timeLeft: "{time} seconds left"
+  seekerStarted: "&f&lThe seeker is seeking."
+  notEnoughPlayers: "&cThere aren't enough players in the '{world}' world."
+  noWorld: "&cThere's no world called '{world}', please create it or change the world in the config.yml file."
+  noSound: "&cSounds are not enabled."
+  soundNoPermission: "&cYou don't have permission to execute this command."
+  soundPlayersOnly: "&cOnly players can execute this command."
+  notInAGame: "&cYou're not in a Hide and Seek game."
+  notAlive: "&cYou're not alive anymore."
+  soundNoSeeker: "&cThe seeker can't get rewards for playing sounds."
+  soundCooldown: "&cYou've already played a sound, please wait before playing another."
+  soundSurvive: "Survive for {time} seconds to get a reward."
+  soundSurvived: "&aYou survived."
+  soundFound: "&cYou didn't get a reward because you were found by the seeker."
+  playerFound: "&f&l{player}&f was found by seeker."
+  seekerKilled: "&f&lThe seeker got killed."
+  seekerFoundEveryone: "&f&lThe seeker found everyone. Well done {seeker}!"
+  seekerLeft: "&fThe seeker left the game. The game stopped."
+gamemode: SURVIVAL
+disable:
+  itemDropping: true
+  blockBreaking: true
+  blockPlacing: true
+commands:
+  global:
+    start:
+      - "broadcast The Hide and Seek event has started!"
+    shrink:
+      - "broadcast The border is shrinking!"
+    stop:
+      - "broadcast The Hide and Seek event has ended!"
+  player:
+    start:
+      - "msg {player} Welcome to the game!"
+    shrink:
+      - "msg {player} Make sure to get to the center!"
+    stop:
+      - "msg {player} We hope you had fun playing!"
+      - "spawn {player}"
