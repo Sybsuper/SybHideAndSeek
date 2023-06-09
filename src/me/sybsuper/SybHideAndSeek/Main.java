@@ -259,7 +259,7 @@ public class Main extends JavaPlugin {
                                 public void run() {
                                     Main.this.seeker.teleport(Main.this.world.getSpawnLocation());
                                     ItemStack sword = new ItemStack(Material.DIAMOND_SWORD);
-                                    sword.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 16);
+                                    sword.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 200);
                                     sword.addUnsafeEnchantment(Enchantment.DURABILITY, 10);
                                     Main.this.seeker.getInventory().setItem(0, sword);
                                 }

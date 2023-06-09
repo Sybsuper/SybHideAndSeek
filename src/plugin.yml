@@ -1,6 +1,6 @@
 name: SybHideAndSeek
 main: me.sybsuper.SybHideAndSeek.Main
-version: 1.4.3
+version: 1.4.4
 author: Sybsuper
 commands:
   hideandseek:
